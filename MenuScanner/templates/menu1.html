@@ -1,0 +1,49 @@
+{% extends 'main1.html' %}
+
+{% block title %}Меню настроения{% endblock %}
+
+{% block body %}
+<div class="container" style="max-width: 1000px;">
+    <h1 class="menu-title">Выберите категорию</h1>
+
+    <div class="main-menu-links">
+        <a href="{{ url_for('breakfast') }}">🍳<span>Завтраки</span></a>
+        <a href="{{ url_for('first_course') }}">🥣<span>Первые блюда</span></a>
+        <a href="{{ url_for('second_course') }}">🍛<span>Вторые блюда</span></a>
+        <a href="{{ url_for('desserts') }}">🍰<span>Десерты</span></a>
+    </div>
+
+    <div class="mood-box">
+        <h2 style="color: #FFD700;">🎄 Не знаете, что выбрать?</h2>
+        <p>Какое у вас сейчас настроение?</p>
+        <div style="margin: 20px 0;">
+            <button class="mood-btn" onclick="getMagic('winter')">❄️ Зимний уют</button>
+            <button class="mood-btn" onclick="getMagic('happy')">✨ Праздник</button>
+            <button class="mood-btn" onclick="getMagic('hungry')">😋 Очень голоден</button>
+        </div>
+
+        <div id="magic-res" style="display:none; padding: 20px; border-top: 1px solid rgba(255,255,255,0.2); animation: fadeIn 0.8s;">
+            <h3 id="res-title" style="color: #FFD700; margin: 0;"></h3>
+            <p id="res-desc" style="font-style: italic;"></p>
+            <a id="res-link" href="#" style="color: #fff; text-decoration: underline; font-weight: bold;">Посмотреть в меню →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+function getMagic(mood) {
+    const data = {
+        'winter': { title: 'Шурпа с бараниной', desc: 'Наваристый бульон, который согреет даже в самый лютый мороз.', link: '/first_course' },
+        'happy': { title: 'Испанский чизкейк', desc: 'Нежнейший десерт для празднования лучших моментов.', link: '/desserts' },
+        'hungry': { title: 'Традиционный Плов', desc: 'Сытное блюдо для тех, кто готов к великим делам!', link: '/second_course' }
+    };
+
+    const res = document.getElementById('magic-res');
+    document.getElementById('res-title').innerText = "Ваш идеальный выбор: " + data[mood].title;
+    document.getElementById('res-desc').innerText = data[mood].desc;
+    document.getElementById('res-link').href = data[mood].link;
+
+    res.style.display = 'block';
+}
+</script>
+{% endblock %}
